@@ -1,0 +1,1 @@
+This category specifies the data describing the status of the vehicle gathered by sensors installed on-board of the vehicle. These data can be retrieved either from the OBD-II interface or from the CAN-bus interface.
