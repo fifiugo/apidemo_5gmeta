@@ -8,6 +8,11 @@ from blueprints.documented_endpoints.tag_vehiculardata import namespace_sve as s
 from blueprints.documented_endpoints.vehiculardata import namespace as vehicular_ns
 
 authorizations = {
+    'apikey': {
+        'type': 'apiKey',
+        'in': 'header',
+        'name': 'X-API'
+    },
     'oauth2': {
         'type': 'oauth2',
         'flow': 'accessCode',
@@ -19,6 +24,7 @@ authorizations = {
         }
     }
 }
+
 
 blueprint = Blueprint('documented_api', __name__, url_prefix='/api')
 

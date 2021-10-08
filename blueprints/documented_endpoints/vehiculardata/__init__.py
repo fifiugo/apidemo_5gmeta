@@ -1,4 +1,5 @@
-from flask import request
+import json
+
 from flask_restplus import Namespace, Resource, fields
 from http import HTTPStatus
 
@@ -27,7 +28,7 @@ location_model = namespace.model('Location', {
 
 category_model = namespace.model('Category', {
     'id': fields.Integer(
-        readonly=True,
+        readonly=False,
         description='Category identifier'
     ),
     'name': fields.String(
@@ -55,22 +56,25 @@ vehiculardata_model = namespace.model('VehicularData', {
     'category': fields.Nested(
         category_model,
         description='category',
-        as_list=False
+        as_list=False,
+        example = 'my category name'
     ),
     'name': fields.String(
         required=True,
         description='VehicularData name',
-        example = 'cdu'
+        example = 'my name'
     ),
-    'photoUrls': fields.Url(
-        url = fields.Url('test'),
-        required=True
+    'photoUrls': fields.List(
+        fields.String,
+        required=True,
+        description='Url name'
     ),
     'location': fields.Nested(
         location_model,
         description='location',
         as_list=False,
-        required=False
+        required=False,
+        example='Berlin'
     ),
     'tag': fields.Nested(
         tag_model,
@@ -80,10 +84,10 @@ vehiculardata_model = namespace.model('VehicularData', {
     )
 })
 
+f = open('static/veihicular_example.txt')
+vehiculardata_example = json.load(f)
+f.close()
 
-vehiculardata_example = {'id': 1, 'name': 'Delorean'}
-
-@namespace.doc(description='Describing GET method', tags=['zzzz qsqsq', 'ici'])
 @namespace.route('')
 class vehiculardata(Resource):
 
@@ -94,9 +98,4 @@ class vehiculardata(Resource):
     @namespace.marshal_with(vehiculardata_model, code=HTTPStatus.CREATED)
     def post(self):
         '''Add a new vehicular data'''
-        if request.json['name'] == 'Entity name':
-            namespace.abort(400, 'Entity with the given name already exists')
-
-        return vehiculardata_example, 201
-
-
+        return vehiculardata_example,201
