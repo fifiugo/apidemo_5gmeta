@@ -57,7 +57,7 @@ vehiculardata_model = namespace.model('VehicularData', {
         category_model,
         description='category',
         as_list=False,
-        example = 'my category name'
+        example ={'name': 'category name'}
     ),
     'name': fields.String(
         required=True,
@@ -67,20 +67,22 @@ vehiculardata_model = namespace.model('VehicularData', {
     'photoUrls': fields.List(
         fields.String,
         required=True,
-        description='Url name'
+        description='Url name',
+        example=['https://www.challenges.fr/assets/img/2018/08/27/cover-r4x3w1000-5b84072224873-pbc18-conference-09-jpg.jpg']
     ),
     'location': fields.Nested(
         location_model,
         description='location',
         as_list=False,
         required=False,
-        example='Berlin'
+        example={'name': 'berlin','longitude': 125.258777,'latitude': 785455.25545}
     ),
     'tag': fields.Nested(
         tag_model,
         description='Tag',
         as_list=True,
-        required=False
+        required=False,
+        example=[{"name": "tag 4"},{"name": "tag 5"}]
     )
 })
 
